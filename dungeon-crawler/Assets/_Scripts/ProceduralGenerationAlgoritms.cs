@@ -21,20 +21,35 @@ public static class ProceduralGenerationAlgoritms
         }   
         return path;
     }
+
+    public static List<Vector2Int> RandomWalkCorridor(Vector2Int startPosition, int corridorLength) //this method lets us create corridors between rooms
+    {
+        List<Vector2Int> corridor = new List<Vector2Int>();
+        var direction = Direction2D.GetRandomCardinalDirection();
+        var currentPosition = startPosition;
+        corridor.Add(currentPosition);
+
+        for (int i = 0; i < corridorLength; i++)
+        {
+            currentPosition += direction;
+            corridor.Add(currentPosition);
+        }
+
+        return corridor;
+    }
 }
 
-public static class Direction2D //this class will let us specify the end position of the vector2d
-{ //Vector2Int is basically a representation of a vector2D, but in ints
-    //so the int is to understand which way we're moving, uo down left or right
-    public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
+public static class Direction2D //this method holds all the possible movements of the walker (so in our case, grid being rectangular)
+{ //it's just up down right left 
+    public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int> 
     {
          Vector2Int.up, //this is just replacing the (0,1) and etc.
          Vector2Int.right,
          Vector2Int.down, 
          Vector2Int.left
-    }; //we're basically declaring this list in class to then use in method to randomize the next position
+    };
 
-    public static Vector2Int GetRandomCardinalDirection()
+    public static Vector2Int GetRandomCardinalDirection() //and then gets us a randomized next position
     {
         return cardinalDirectionsList[Random.Range(0, cardinalDirectionsList.Count)];
     }
